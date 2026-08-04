@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Opencut/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenCut — Free Open Source Video Editor</title>
+    <meta name="description" content="OpenCut is a free, open-source video editor for web, desktop, and mobile. The open-source CapCut alternative." />
+    <meta property="og:title" content="OpenCut — Free Open Source Video Editor" />
+    <meta property="og:description" content="A free and open source video editor for web, desktop, and mobile." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // SPA redirect restore for GitHub Pages 404.html trick
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

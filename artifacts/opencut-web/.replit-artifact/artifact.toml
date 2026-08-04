@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "OPENCUT Website"
+description = "Marketing website for OPENCUT — the open-source video editor. Includes landing page, about, how-to, cookies policy, interactive product demo, wallet login (Metamask + Phantom), user dashboard, and product roadmap. Dark cinematic studio aesthetic, mobile-first, deployed to GitHub Pages."
+version = "1.0.0"
+id = "artifacts/opencut-web"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24659
+
+[services.development]
+run = "pnpm --filter @workspace/opencut-web run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/opencut-web", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/opencut-web/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24659"
+BASE_PATH = "/"

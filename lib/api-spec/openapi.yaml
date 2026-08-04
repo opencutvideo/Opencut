@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: OPENCUT API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: users
+    description: User wallet operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,104 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /users/connect:
+    post:
+      operationId: connectWallet
+      tags: [users]
+      summary: Connect wallet and register/login
+      description: Register or login a user via wallet address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WalletInput"
+      responses:
+        "200":
+          description: User connected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/me:
+    get:
+      operationId: getMe
+      tags: [users]
+      summary: Get current user profile
+      parameters:
+        - in: header
+          name: x-wallet-address
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updateMe
+      tags: [users]
+      summary: Update current user profile
+      parameters:
+        - in: header
+          name: x-wallet-address
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/me/stats:
+    get:
+      operationId: getMyStats
+      tags: [users]
+      summary: Get current user dashboard stats
+      parameters:
+        - in: header
+          name: x-wallet-address
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStats"
+  /users/leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [users]
+      summary: Get top users leaderboard
+      responses:
+        "200":
+          description: Leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +133,99 @@ components:
           type: string
       required:
         - status
-
+    WalletInput:
+      type: object
+      required:
+        - walletAddress
+        - walletType
+      properties:
+        walletAddress:
+          type: string
+          description: Blockchain wallet address
+        walletType:
+          type: string
+          enum: [metamask, phantom]
+          description: Type of wallet
+        username:
+          type: ["string", "null"]
+          description: Optional display name
+    UserUpdate:
+      type: object
+      properties:
+        username:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+    User:
+      type: object
+      required:
+        - id
+        - walletAddress
+        - walletType
+        - joinedAt
+      properties:
+        id:
+          type: number
+        walletAddress:
+          type: string
+        walletType:
+          type: string
+          enum: [metamask, phantom]
+        username:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+        joinedAt:
+          type: string
+          format: date-time
+        lastSeenAt:
+          type: string
+          format: date-time
+    UserStats:
+      type: object
+      required:
+        - projectsCount
+        - exportsCount
+        - totalDurationSeconds
+        - memberSince
+      properties:
+        projectsCount:
+          type: number
+        exportsCount:
+          type: number
+        totalDurationSeconds:
+          type: number
+        memberSince:
+          type: string
+          format: date-time
+    LeaderboardEntry:
+      type: object
+      required:
+        - rank
+        - walletAddress
+        - walletType
+        - exportsCount
+      properties:
+        rank:
+          type: number
+        walletAddress:
+          type: string
+        walletType:
+          type: string
+        username:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        exportsCount:
+          type: number
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string

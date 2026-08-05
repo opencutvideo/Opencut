@@ -77,9 +77,12 @@ function RootLayout() {
           {/* Desktop CTA */}
           <Link
             to="/editor"
-            className="hidden md:inline-flex items-center gap-1.5 bg-white text-black text-sm font-medium px-4 py-2 rounded-md hover:bg-white/90 transition-colors"
+            className="hidden md:inline-flex items-center gap-1.5 bg-white text-black text-sm font-semibold px-4 py-2 rounded-md hover:bg-white/90 active:scale-[0.97] transition-all"
           >
-            Open Editor
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <polygon points="2,1 12,6.5 2,12" fill="currentColor" />
+            </svg>
+            Launch OpenCut
           </Link>
 
           {/* Mobile: hamburger */}
@@ -125,9 +128,12 @@ function RootLayout() {
             )}
             <Link
               to="/editor"
-              className="mt-2 inline-flex items-center justify-center bg-white text-black text-sm font-medium px-4 py-2.5 rounded-md hover:bg-white/90 transition-colors"
+              className="mt-2 inline-flex items-center justify-center gap-2 bg-white text-black text-sm font-semibold px-4 py-2.5 rounded-md hover:bg-white/90 active:scale-[0.97] transition-all"
             >
-              Open Editor
+              <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
+                <polygon points="2,1 12,6.5 2,12" fill="currentColor" />
+              </svg>
+              Launch OpenCut
             </Link>
           </nav>
         </div>

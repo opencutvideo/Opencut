@@ -14,6 +14,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as EditorImport } from './routes/editor'
 import { Route as AboutImport } from './routes/about'
+import { Route as PrivacyImport } from './routes/privacy'
+import { Route as CookiesImport } from './routes/cookies'
+import { Route as TermsImport } from './routes/terms'
 
 // Create/Update Routes
 
@@ -32,6 +35,24 @@ const EditorRoute = EditorImport.update({
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PrivacyRoute = PrivacyImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CookiesRoute = CookiesImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TermsRoute = TermsImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +81,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyImport
+      parentRoute: typeof rootRoute
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +111,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
+  '/terms': typeof TermsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
+  '/terms': typeof TermsRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +130,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
+  '/terms': typeof TermsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/editor' | '/about'
+  fullPaths: '/' | '/editor' | '/about' | '/privacy' | '/cookies' | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/editor' | '/about'
-  id: '__root__' | '/' | '/editor' | '/about'
+  to: '/' | '/editor' | '/about' | '/privacy' | '/cookies' | '/terms'
+  id: '__root__' | '/' | '/editor' | '/about' | '/privacy' | '/cookies' | '/terms'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +148,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EditorRoute: typeof EditorRoute
   AboutRoute: typeof AboutRoute
+  PrivacyRoute: typeof PrivacyRoute
+  CookiesRoute: typeof CookiesRoute
+  TermsRoute: typeof TermsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EditorRoute: EditorRoute,
   AboutRoute: AboutRoute,
+  PrivacyRoute: PrivacyRoute,
+  CookiesRoute: CookiesRoute,
+  TermsRoute: TermsRoute,
 }
 
 export const routeTree = rootRoute

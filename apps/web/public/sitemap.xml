@@ -25,4 +25,25 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://opencutvideo.github.io/Opencut/privacy</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://opencutvideo.github.io/Opencut/cookies</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://opencutvideo.github.io/Opencut/terms</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>

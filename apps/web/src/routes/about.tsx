@@ -45,11 +45,36 @@ const stack = [
 ]
 
 const milestones = [
-  { period: '2024', label: 'OpenCut Classic launched', note: 'Web-only editor, 10k+ GitHub stars' },
-  { period: 'Early 2025', label: 'Rewrite decision', note: 'Rust core + WASM + Tauri architecture locked' },
-  { period: 'Mid 2025', label: 'Plugin system design', note: 'Public API spec drafted, community input gathered' },
-  { period: 'Late 2025', label: 'Desktop alpha', note: 'macOS + Windows Tauri shell, basic timeline' },
-  { period: '2026+', label: 'Mobile + MCP', note: 'iOS/Android apps, AI agent scripting interface' },
+  {
+    period: 'Aug 2026',
+    label: 'Web editor alpha — live now',
+    note: 'Browser-based editor at opencutvideo.github.io/Opencut. Basic timeline, import, and export.',
+    current: true,
+  },
+  {
+    period: 'Q4 2026',
+    label: 'Desktop alpha',
+    note: 'Tauri shell for macOS and Windows. Native file access, OS-level performance, no browser limits.',
+    current: false,
+  },
+  {
+    period: 'Q1 2027',
+    label: 'Plugin system beta',
+    note: 'Public plugin API opens. Third-party effects, exporters, and custom UI panels.',
+    current: false,
+  },
+  {
+    period: 'Q2 2027',
+    label: 'Mobile apps',
+    note: 'iOS and Android apps. Same editor, same projects — edit on any device.',
+    current: false,
+  },
+  {
+    period: '2027+',
+    label: 'MCP & AI scripting',
+    note: 'Model Context Protocol server. Automate cuts, captions, and exports with any AI agent.',
+    current: false,
+  },
 ]
 
 export default function About() {
@@ -118,10 +143,24 @@ export default function About() {
         <div className="relative pl-6 border-l border-white/10 flex flex-col gap-8">
           {milestones.map((m) => (
             <div key={m.label} className="relative">
-              <div className="absolute -left-[25px] top-1 w-2 h-2 rounded-full bg-white/20 border border-white/10" />
-              <div className="text-xs text-muted-foreground mb-1">{m.period}</div>
+              <div
+                className={[
+                  'absolute -left-[25px] top-1 w-2 h-2 rounded-full border',
+                  m.current
+                    ? 'bg-green-400 border-green-400/50 shadow-[0_0_6px_rgba(74,222,128,0.5)]'
+                    : 'bg-white/10 border-white/20',
+                ].join(' ')}
+              />
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-muted-foreground">{m.period}</span>
+                {m.current && (
+                  <span className="text-[10px] font-medium text-green-400 border border-green-400/25 bg-green-400/5 rounded-full px-2 py-0.5">
+                    Now
+                  </span>
+                )}
+              </div>
               <div className="font-medium text-white text-sm mb-1">{m.label}</div>
-              <div className="text-xs text-muted-foreground">{m.note}</div>
+              <div className="text-xs text-muted-foreground leading-relaxed">{m.note}</div>
             </div>
           ))}
         </div>

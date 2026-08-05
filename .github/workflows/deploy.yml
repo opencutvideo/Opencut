@@ -37,7 +37,7 @@ jobs:
       - name: Build OPENCUT Website
         run: pnpm --filter @workspace/opencut-web run build
         env:
-          BASE_PATH: /Opencut/
+          BASE_PATH: /
           PORT: 3000
           NODE_ENV: production
 

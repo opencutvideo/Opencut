@@ -1,13 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>OpenCut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenCut — Free Open Source Video Editor</title>
+  <meta name="description" content="OpenCut is a free, open-source video editor for web, desktop, and mobile. No watermarks, no subscriptions." />
+  <meta name="robots" content="noindex" />
+  <meta property="og:title" content="OpenCut — Free Open Source Video Editor" />
+  <meta property="og:image" content="https://opencutvideo.github.io/Opencut/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/Opencut/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/Opencut/apple-touch-icon.png" />
+  <meta name="theme-color" content="#111111" />
   <script>
-    // SPA redirect trick for GitHub Pages
-    // Stores the path in sessionStorage and redirects to index
     var l = window.location;
-    var segmentCount = 1; // /Opencut = 1 segment
+    var segmentCount = 1;
     var path = l.pathname.slice(1).split('/').slice(segmentCount).join('/');
     if (path) {
       sessionStorage.redirect = '/' + path + (l.search || '') + (l.hash || '');

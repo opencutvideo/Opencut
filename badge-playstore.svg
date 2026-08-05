@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="158" height="42" viewBox="0 0 158 42">
+  <rect width="158" height="42" rx="7" fill="#000"/>
+  <rect width="158" height="42" rx="7" fill="none" stroke="#A6A6A6" stroke-width="0.5"/>
+  <!-- Google Play triangle icon (4-color) -->
+  <path d="M10 8.5l13.5 12.5L10 33.5V8.5z" fill="#00C4FF"/>
+  <path d="M10 8.5l8 7.5L10 23.5V8.5z" fill="#00E5A0"/>
+  <path d="M10 23.5l8-7.5 6.5 6-6.5 6L10 23.5z" fill="#FFD400"/>
+  <path d="M18 16l5.5 5-5.5 5-5-5 5-5z" fill="#FF3D57"/>
+  <path d="M10 8.5l8 7.5-8 7.5V8.5z" fill="#00E5A0"/>
+  <!-- Simplified colored play icon -->
+  <g transform="translate(9, 9)">
+    <path d="M1 1.8v18.4c0 1.1 1.2 1.7 2 1l7.4-6.8-7.4-6.8L1 1.8z" fill="#00C4FF"/>
+    <path d="M1 1.8l9.4 5.8-2.4 2.2L1 1.8z" fill="#00E5A0"/>
+    <path d="M10.4 7.6l4.6 2.9-4.6 2.9-2.4-2.9 2.4-2.9z" fill="#FFD400"/>
+    <path d="M10.4 13.4L1 19.2l7-6.4 2.4.6z" fill="#FF3D57"/>
+  </g>
+  <!-- Get it on -->
+  <text x="38" y="16" font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif" font-size="9" fill="#fff" letter-spacing="0.3">Get it on</text>
+  <!-- Google Play -->
+  <text x="37" y="29" font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif" font-size="16" font-weight="600" fill="#fff" letter-spacing="-0.2">Google Play</text>
+</svg>

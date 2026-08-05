@@ -1,0 +1,31 @@
+{
+  "name": "OpenCut",
+  "short_name": "OpenCut",
+  "description": "Free, open-source video editor for web, desktop, and mobile. No watermarks, no subscriptions.",
+  "start_url": "/Opencut/",
+  "scope": "/Opencut/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/Opencut/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Opencut/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Opencut/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr"
+}

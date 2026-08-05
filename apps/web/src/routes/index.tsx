@@ -358,7 +358,6 @@ export default function Home() {
   const heroSection = useInView(0.05)
   const statsSection = useInView(0.2)
   const featSection = useInView(0.1)
-  const bannerSection = useInView(0.2)
   const ctaSection = useInView(0.2)
 
   // Auto-advance features
@@ -521,46 +520,6 @@ export default function Home() {
               <div className="mt-auto" key={`visual-${f.id}`}>
                 {f.visual}
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Classic editor banner ── */}
-      <section
-        ref={bannerSection.ref as React.RefObject<HTMLElement>}
-        className="pb-20 px-6"
-      >
-        <div className="mx-auto max-w-6xl">
-          <div className={`rounded-2xl border border-white/8 bg-white/[0.015] px-8 py-9 md:px-12 flex flex-col md:flex-row items-start md:items-center gap-8 justify-between transition-all duration-700 ${bannerSection.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="max-w-lg">
-              <p className="text-[10px] font-semibold text-amber-400/80 uppercase tracking-widest mb-3">In the meantime</p>
-              <h2 className="text-lg font-bold text-white mb-2">The classic editor is available now</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                The full rewrite is underway. Until it ships,{' '}
-                <a href="https://opencut.app" className="text-white/65 underline underline-offset-4 hover:text-white transition-colors">
-                  opencut.app
-                </a>{' '}
-                is fully functional and free with no watermarks.
-              </p>
-            </div>
-            <div className="flex gap-3 shrink-0">
-              <a
-                href="https://opencut.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-white/90 active:scale-[0.97] transition-all whitespace-nowrap"
-              >
-                Use Classic Editor
-              </a>
-              <a
-                href="https://github.com/opencut-app/opencut-classic"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border border-white/10 text-white/55 text-sm px-5 py-2.5 rounded-lg hover:border-white/20 hover:text-white/75 active:scale-[0.97] transition-all whitespace-nowrap"
-              >
-                Source
-              </a>
             </div>
           </div>
         </div>

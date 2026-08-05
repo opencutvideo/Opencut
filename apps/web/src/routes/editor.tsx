@@ -23,6 +23,7 @@ export default function Editor() {
   const [isPlaying, setIsPlaying]     = useState(false)
   const [volume, setVolume]           = useState(1)
   const [muted, setMuted]             = useState(false)
+  const [playbackRate, setPlaybackRate] = useState(1)
 
   // trim state
   const [trimIn, setTrimIn]   = useState(0)
@@ -106,6 +107,14 @@ export default function Editor() {
     v.muted  = muted
   }, [volume, muted])
 
+  // ── Playback rate ─────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.playbackRate = playbackRate
+  }, [playbackRate])
+
   // ── Timeline helpers ──────────────────────────────────────────────────────
 
   const pxToTime = useCallback((clientX: number) => {
@@ -171,6 +180,10 @@ export default function Editor() {
       if (e.code === 'ArrowLeft')  { const t = Math.max(trimIn,  currentTime - 1/30); v.currentTime = t; setCurrentTime(t) }
       if (e.code === 'ArrowRight') { const t = Math.min(trimOut, currentTime + 1/30); v.currentTime = t; setCurrentTime(t) }
       if (e.code === 'KeyM')  { setMuted(m => !m) }
+      // J/K/L — standard NLE speed controls
+      if (e.code === 'KeyL') { e.preventDefault(); setPlaybackRate(r => { const next = r <= 0 ? 1 : Math.min(r * 2, 8); v.playbackRate = next; if (!isPlaying) v.play(); return next }) }
+      if (e.code === 'KeyJ') { e.preventDefault(); setPlaybackRate(r => { const next = r >= 0 ? -1 : Math.max(r * 2, -8); v.playbackRate = Math.abs(next); if (!isPlaying) v.play(); return Math.abs(next) }) }
+      if (e.code === 'KeyK') { e.preventDefault(); v.pause(); setPlaybackRate(1); v.playbackRate = 1 }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -497,6 +510,40 @@ export default function Editor() {
             </div>
           </div>
 
+          {/* Speed control */}
+          <div>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-3">Playback speed</p>
+            <div className="flex items-center gap-2 mb-2">
+              <input
+                type="range" min={0.25} max={4} step={0.25} value={playbackRate}
+                onChange={e => setPlaybackRate(+e.target.value)}
+                className="flex-1 accent-white cursor-pointer h-1"
+              />
+              <span className="text-white tabular-nums w-7 text-right">{playbackRate}×</span>
+            </div>
+            <div className="flex gap-1">
+              {[0.5, 1, 1.5, 2].map(r => (
+                <button
+                  key={r}
+                  onClick={() => setPlaybackRate(r)}
+                  className={[
+                    'flex-1 rounded border text-[9px] py-1 transition-colors',
+                    playbackRate === r
+                      ? 'border-white/30 bg-white/10 text-white'
+                      : 'border-white/8 text-muted-foreground hover:border-white/20 hover:text-white/70',
+                  ].join(' ')}
+                >
+                  {r}×
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-x-3 gap-y-1 flex-wrap mt-2 text-[9px] text-muted-foreground opacity-50">
+              <span><kbd className="font-mono bg-white/5 border border-white/10 rounded px-1">J</kbd> slower</span>
+              <span><kbd className="font-mono bg-white/5 border border-white/10 rounded px-1">K</kbd> pause</span>
+              <span><kbd className="font-mono bg-white/5 border border-white/10 rounded px-1">L</kbd> faster</span>
+            </div>
+          </div>
+
           <div className="mt-auto text-[10px] text-muted-foreground opacity-40 leading-relaxed">
             Export saves the trimmed region as a .webm file. Works in Chrome and Edge.
           </div>
@@ -508,7 +555,7 @@ export default function Editor() {
 
         {/* Track label row */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-[10px] text-muted-foreground w-6 shrink-0">V1</span>
+          <span className="text-[10px] text-muted-foreground w-6 shrink-0 text-violet-400">V1</span>
           {/* Timeline strip */}
           <div
             ref={timelineRef}
@@ -589,11 +636,43 @@ export default function Editor() {
           </div>
         </div>
 
+        {/* A1 — audio track (mirrors full clip, linked to video) */}
+        {videoUrl && (
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[10px] w-6 shrink-0 text-emerald-400">A1</span>
+            <div
+              className="relative flex-1 h-6 rounded-md overflow-hidden select-none"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              {/* Waveform bars (decorative, proportional to active region) */}
+              <div className="absolute inset-0 flex items-center gap-px px-1 opacity-40 pointer-events-none">
+                {Array.from({ length: 80 }, (_, i) => {
+                  const pct = i / 80
+                  const inRange = pct >= inPct / 100 && pct <= outPct / 100
+                  const h = Math.sin(i * 1.7) * 0.4 + Math.sin(i * 0.3) * 0.3 + 0.3
+                  return (
+                    <div
+                      key={i}
+                      className={inRange ? 'bg-emerald-400' : 'bg-white/20'}
+                      style={{ width: 1, height: `${Math.abs(h) * 100}%`, flexShrink: 0 }}
+                    />
+                  )
+                })}
+              </div>
+              {/* Dimmed regions matching trim */}
+              <div className="absolute inset-y-0 left-0 bg-black/50 rounded-l-md" style={{ width: `${inPct}%` }} />
+              <div className="absolute inset-y-0 right-0 bg-black/50 rounded-r-md" style={{ width: `${100 - outPct}%` }} />
+              {/* Playhead line */}
+              <div className="absolute inset-y-0 w-px bg-white/70 z-10 pointer-events-none" style={{ left: `${playPct}%` }} />
+            </div>
+          </div>
+        )}
+
         {/* Timeline footer */}
-        <div className="flex items-center pl-8 text-[10px] text-muted-foreground opacity-40">
+        <div className="flex items-center pl-8 text-[10px] text-muted-foreground opacity-40 mt-2">
           <span>{fmt(0)}</span>
           <span className="flex-1 text-center">
-            {dragging ? 'Dragging...' : 'Click to seek · Drag blue handles to trim · Press I / O to set trim points'}
+            {dragging ? 'Dragging...' : 'Click to seek · Drag blue handles to trim · I / O set trim · J K L speed'}
           </span>
           <span>{fmt(duration)}</span>
         </div>

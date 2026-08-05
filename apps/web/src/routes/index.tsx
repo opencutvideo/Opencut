@@ -197,9 +197,9 @@ export default function Home() {
           {/* Window chrome */}
           <div className="flex items-center gap-2 px-4 py-3 border-b border-white/6 bg-white/[0.02]">
             <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
             </div>
             <div className="flex-1 text-center text-[11px] text-muted-foreground">
               OpenCut — untitled project
